@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1903779731",
+    "project_id": "tato-a7826",
+    "storage_bucket": "tato-a7826.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1903779731:android:58d87b254c6bd3149d5266",
+        "android_client_info": {
+          "package_name": "com.example.rusim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1903779731-jrkicp54b9ppgn0rt5jkm98ftts3rhv1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rusim",
+            "certificate_hash": "b9c8f46d949b235c847b4e125bfcf1bfef6d8bd4"
+          }
+        },
+        {
+          "client_id": "1903779731-66or0c6eet2rp66manl5hrvo6crhpo1l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQx8eRiiPemw4qVy_3rI9zV4Kfm6C5sSQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1903779731-66or0c6eet2rp66manl5hrvo6crhpo1l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
