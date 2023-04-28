@@ -16,7 +16,12 @@ import '../table/Meeting.dart';
 
 class serves extends StatelessWidget {
   DateTime? timeSeceted;
-  serves({super.key, required this.timeSeceted});
+  String docid, personId;
+  serves(
+      {super.key,
+      required this.timeSeceted,
+      required this.docid,
+      required this.personId});
   homeC homController = Get.put(homeC());
   @override
   Widget build(BuildContext context) {
@@ -86,10 +91,14 @@ class serves extends StatelessWidget {
                                   textConfirm: 'اضافة',
                                   confirmTextColor: Colors.black,
                                   onConfirm: () {
+                                    Get.back();
                                     cc.setPoint(
+                                        groupId: docid,
+                                        PresonId: personId,
                                         timeSeceted: timeSeceted!,
                                         endTimee: cc.servesList[index]['time']);
-                                    homController.updeatpoint();
+                                    homController.updeatpoint(
+                                        docid: docid, persoinidd: personId);
                                   },
                                   backgroundColor: AppColor.mainColor,
                                   titleStyle: const TextStyle(

@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:rusim/constns/AppColor.dart';
 import 'package:rusim/controller/homeC.dart';
 import 'package:rusim/controller/homeController.dart';
+import 'package:rusim/view/pointsPage.dart';
 import 'package:rusim/view/serves.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../ineed/ineed.dart';
@@ -50,6 +52,12 @@ class home extends StatelessWidget {
                             ],
                           ),
                           onTap: () {
+                            cc.person.length > 0 && cc.items.length > 0
+                                ? cc.gertPersonPoits(
+                                    personDocid: cc.person[cc.personIndex]
+                                        ['id'],
+                                    groupId: cc.items[cc.index]['id'])
+                                : null;
                             Get.defaultDialog(
                                 titleStyle: const TextStyle(
                                   color: Colors.white,
@@ -69,7 +77,7 @@ class home extends StatelessWidget {
                                         shrinkWrap: true,
                                         itemCount: cc.items.length > 0
                                             ? cc.items.length
-                                            : 5,
+                                            : 1,
                                         itemBuilder: (context, index) {
                                           return Directionality(
                                             textDirection: TextDirection.rtl,
@@ -77,16 +85,26 @@ class home extends StatelessWidget {
                                               colorr: Colors.white,
                                               w: double.infinity,
                                               onTap: () {
-                                                cc.index = index;
-                                                print(cc.items[index]['id']);
-                                                cc.getStaffPersons(
-                                                    gropId: cc.items[index]
-                                                        ['id']);
+                                                if (cc.items.length > 0) {
+                                                  cc.index = index;
+
+                                                  cc.getStaffPersons(
+                                                      gropId: cc.items[index]
+                                                          ['id']);
+                                                  cc.gertPersonPoits(
+                                                      personDocid: cc.person[0]
+                                                          ['id'],
+                                                      groupId: cc.items[index]
+                                                          ['id']);
+
+                                                  Get.back();
+                                                }
                                               },
                                               child: Center(
                                                 child: ineed.custmText(
-                                                    data:
-                                                        '${cc.items[index]['name']}',
+                                                    data: cc.items.length > 0
+                                                        ? '${cc.items[index]['name']}'
+                                                        : 'لا يوجد مجاميع',
                                                     color: Colors.black,
                                                     isbold: true),
                                               ),
@@ -106,11 +124,15 @@ class home extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                ineed.custmText(
-                                    data: cc.person.length > 0
-                                        ? '${cc.person[0]['name']}'
-                                        : 'اختر عضو',
-                                    color: Colors.black),
+                                Container(
+                                  width: 90.w,
+                                  child: ineed.custmText(
+                                      data: cc.person.length > 0 &&
+                                              cc.items.length > 0
+                                          ? '${cc.person[cc.personIndex]['name']}'
+                                          : 'اختر عضو',
+                                      color: Colors.black),
+                                ),
                                 Icon(
                                   Icons.arrow_drop_down_outlined,
                                   color: AppColor.mainColor,
@@ -149,11 +171,18 @@ class home extends StatelessWidget {
                                                         colorr: Colors.white,
                                                         w: double.infinity,
                                                         onTap: () {
-                                                          // cc.index = index;
-                                                          // print(cc.items[index]['id']);
-                                                          // cc.getStaffPersons(
-                                                          //     gropId: cc.person[index]
-                                                          //         ['id']);
+                                                          cc.personIndex =
+                                                              index;
+                                                          cc.gertPersonPoits(
+                                                              personDocid: cc
+                                                                      .person[
+                                                                  index]['id'],
+                                                              groupId: cc.items[
+                                                                      cc.index]
+                                                                  ['id']);
+                                                          Get.back();
+                                                          ///////
+                                                          ///
                                                         },
                                                         child: Center(
                                                           child: ineed.custmText(
@@ -169,7 +198,20 @@ class home extends StatelessWidget {
                                                       data: 'جار التحميل ..');
                                             },
                                           ),
-                                        )
+                                        ),
+                                        TextButton(
+                                            onPressed: () {
+                                              Get.to(() => pontsPage(
+                                                  docid: cc.items[cc.index]
+                                                      ['id'],
+                                                  personId:
+                                                      cc.person[cc.personIndex]
+                                                          ['id']));
+                                            },
+                                            child: ineed.custmText(
+                                                data:
+                                                    'ادارة حجوزات العضو المحدد',
+                                                color: Colors.white))
                                       ],
                                     ));
                               }
@@ -303,11 +345,27 @@ class home extends StatelessWidget {
                           onTap: (CalendarTapDetails details) {
                             if (details.targetElement ==
                                 CalendarElement.appointment) {
+                              print(details.date);
+                              AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.warning,
+                                animType: AnimType.rightSlide,
+                                title: 'حذف',
+                                desc: 'هل تريد حذف هذا الحجز',
+                                btnCancelOnPress: () {},
+                                btnOkOnPress: () {},
+                              )..show();
                               print('محجوز');
                             } else {
-                              Get.to(() => serves(
-                                    timeSeceted: timeSeceted,
-                                  ));
+                              if (cc.person.length > 0) {
+                                Get.to(() => serves(
+                                      docid: cc.items[cc.index]['id'],
+                                      personId: cc.person[cc.personIndex]['id'],
+                                      timeSeceted: timeSeceted,
+                                    ));
+                              } else {
+                                Get.snackbar('انتبه', 'اختر عضو');
+                              }
                             }
                           },
                           // allowAppointmentResize: true,

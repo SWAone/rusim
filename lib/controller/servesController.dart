@@ -66,10 +66,11 @@ class servesController extends GetxController {
     }
   }
 
-  setPoint({
-    required DateTime timeSeceted,
-    required int endTimee,
-  }) async {
+  setPoint(
+      {required DateTime timeSeceted,
+      required int endTimee,
+      required String groupId,
+      PresonId}) async {
     var sta = formk2.currentState;
     if (sta!.validate()) {
       sta.save();
@@ -77,8 +78,18 @@ class servesController extends GetxController {
           timeSeceted.day, timeSeceted.hour);
       DateTime endTime = startTime.add(Duration(minutes: endTimee));
       await FirebaseFirestore.instance
+          .collection('AllGroup')
+          .doc(groupId)
+          .collection('staff')
+          .doc(PresonId)
           .collection('points')
-          .add({"title": title, "startTime": startTime, "endTime": endTime});
+          .add({
+        "title": title,
+        "startTime": startTime,
+        "endTime": endTime
+      }).then((value) {
+        update();
+      });
 
       Get.back();
     }
