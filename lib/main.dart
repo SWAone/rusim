@@ -26,6 +26,7 @@
 //     );
 //   }
 // }
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,6 +34,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:rolling_bottom_bar/rolling_bottom_bar.dart';
 import 'package:rolling_bottom_bar/rolling_bottom_bar_item.dart';
 import 'package:rusim/constns/AppColor.dart';
+import 'package:rusim/view/Auth/login.dart';
 import 'package:rusim/view/home.dart';
 import 'package:rusim/view/homepage.dart';
 import 'package:rusim/view/mainServes.dart';
@@ -51,7 +53,9 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: MyHomePage(),
+          home: FirebaseAuth.instance.currentUser == null
+              ? login()
+              : MyHomePage(),
         );
       },
     );

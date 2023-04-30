@@ -8,6 +8,7 @@ import 'package:rusim/controller/homeController.dart';
 import 'package:rusim/controller/servesController.dart';
 import 'package:rusim/ineed/ineed.dart';
 import 'package:rusim/table/MeetingDataSource.dart';
+import 'package:rusim/view/Auth/Controller/AuthController.dart';
 import 'package:rusim/view/homepage.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -15,10 +16,16 @@ import '../constns/AppColor.dart';
 import '../table/Meeting.dart';
 
 class serves extends StatelessWidget {
+  String StaffName;
   DateTime? timeSeceted;
   String docid, personId;
+  String? coustmerNmae;
+
+  homeC homc = Get.put(homeC());
+
   serves(
       {super.key,
+      required this.StaffName,
       required this.timeSeceted,
       required this.docid,
       required this.personId});
@@ -93,6 +100,9 @@ class serves extends StatelessWidget {
                                   onConfirm: () {
                                     Get.back();
                                     cc.setPoint(
+                                        staffName: StaffName,
+                                        servesName: cc.servesList[index]
+                                            ['title'],
                                         groupId: docid,
                                         PresonId: personId,
                                         timeSeceted: timeSeceted!,

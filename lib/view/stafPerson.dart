@@ -34,6 +34,20 @@ class stafPerson extends StatelessWidget {
                               cc.personName = p0;
                             },
                           ),
+                          Divider(),
+                          ineed.custemTextForm(
+                            lable: 'انشاء معرف',
+                            onSaved: (p0) {
+                              // cc.personName = p0;
+                            },
+                          ),
+                          Divider(),
+                          ineed.custemTextForm(
+                            lable: 'كلمة سر',
+                            onSaved: (p0) {
+                              // cc.personName = p0;
+                            },
+                          ),
                         ],
                       ),
                     ),

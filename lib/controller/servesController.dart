@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:rusim/controller/homeC.dart';
 import 'package:rusim/ineed/ineed.dart';
 
 import '../constns/AppColor.dart';
@@ -13,6 +14,8 @@ import '../table/MeetingDataSource.dart';
 class servesController extends GetxController {
   List<Map> servesList = [];
   bool getServesLoding = true;
+  homeC homc = Get.put(homeC());
+
   GlobalKey<FormState> formk = new GlobalKey<FormState>();
   GlobalKey<FormState> formk2 = new GlobalKey<FormState>();
 
@@ -70,13 +73,20 @@ class servesController extends GetxController {
       {required DateTime timeSeceted,
       required int endTimee,
       required String groupId,
+      required String servesName,
+      required String staffName,
       PresonId}) async {
     var sta = formk2.currentState;
     if (sta!.validate()) {
       sta.save();
+
       DateTime startTime = DateTime(timeSeceted.year, timeSeceted.month,
           timeSeceted.day, timeSeceted.hour);
       DateTime endTime = startTime.add(Duration(minutes: endTimee));
+      homc.sendNotification(
+          " قام  ${homc.name}باضافة حجز جديد  $servesName لعضو الفريق $staffName",
+          "من الساعة ${timeSeceted.hour} : ${timeSeceted.minute} لتاريخ ${timeSeceted.year}/${timeSeceted.month}/${timeSeceted.day} مدة الحجز ${timeSeceted.hour + endTimee} دقيقة",
+          " ");
       await FirebaseFirestore.instance
           .collection('AllGroup')
           .doc(groupId)

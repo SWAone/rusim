@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-
+import 'package:http/http.dart' as http;
 import '../constns/AppColor.dart';
 import '../table/Meeting.dart';
 import '../table/MeetingDataSource.dart';
@@ -9,36 +13,34 @@ class homeC extends GetxController {
   List<Meeting> meetings = <Meeting>[];
   bool loding = true;
   int index = 0;
+  int? rank;
   int personIndex = 0;
   List<Map> items = [];
   List<Map> person = [];
+
+  String? uid, name;
   @override
   void onInit() async {
     // getpoints();
     getGroup();
+    await FirebaseMessaging.instance.subscribeToTopic('all');
 
+    getMessge();
+    uid = await FirebaseAuth.instance.currentUser!.uid;
+    getUserInfo();
     super.onInit();
   }
 
-  // void getpoints() async {
-  //   meetings.clear();
-  //   await FirebaseFirestore.instance.collection('points').get().then(
-  //     (value) {
-  //       value.docs.forEach((element) {
-  //         Meeting newMeeting = Meeting(
-  //             element.data()['title'],
-  //             element.data()['startTime'].toDate(),
-  //             element.data()['endTime'].toDate(),
-  //             AppColor.mainColor,
-  //             false);
-  //         meetings.add(newMeeting);
-  //       });
-  //     },
-  //   ).then((value) {
-  //     loding = false;
-  //     update();
-  //   });
-  // }
+  getUserInfo() async {
+    await FirebaseFirestore.instance
+        .collection('token')
+        .doc(uid)
+        .get()
+        .then((value) {
+      name = value.data()!['name'];
+      rank = value.data()!['rank'];
+    });
+  }
 
   void updeatpoint({required String docid, persoinidd}) async {
     gertPersonPoits(groupId: docid, personDocid: persoinidd);
@@ -57,8 +59,6 @@ class homeC extends GetxController {
       }).then((value) {
         update();
         getStaffPersons(gropId: items[0]['id']);
-
-        print(items.length);
       });
     } catch (e) {}
   }
@@ -109,6 +109,50 @@ class homeC extends GetxController {
     ).then((value) async {
       loding = false;
       update();
+    });
+  }
+
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+  Future<void> sendNotification(
+    String title,
+    String body,
+    String id,
+  ) async {
+    String serverToken =
+        'AAAAAHF5X5M:APA91bFpK2mFros7bXKVBIJGhNSJD-1Hcgqi_7ssVDed0jM7r3HwUMHzzkWVZWUjdTH8EKl9XrBNeJ0b4RSXJOCq_JbvkSoAt9Z7KOeDL-uTuf2LAYnKIGemh9CJbtIoCPcPvYTpK4lq';
+
+    await http.post(
+      Uri.parse('https://fcm.googleapis.com/fcm/send'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'key=$serverToken',
+      },
+      body: jsonEncode(
+        <String, dynamic>{
+          'notification': <String, dynamic>{
+            'body': body.toString(),
+            'title': title.toString()
+          },
+          'priority': 'high',
+          'data': <String, dynamic>{
+            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+            'id': '1',
+            'status': 'done',
+            'to': "/topic/all"
+          },
+          'to': "/topics/all"
+        },
+      ),
+    );
+  }
+
+  getMessge() {
+    FirebaseMessaging.onMessage.listen((event) {
+      print('=====================');
+      print(event.notification!.title);
+      print(event.notification!.body);
+      // print(event.notification!.toMap()['name']);
     });
   }
 }
