@@ -7,33 +7,40 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:rusim/main.dart';
 
+import '../../../ineed/ineed.dart';
+
 class AuthController extends GetxController {
-  String? name, email, pass, uid;
+  String? email, pass;
   bool loding = false;
 
   GlobalKey<FormState> ke = new GlobalKey<FormState>();
-  void CreateAcount() async {
+  void sginIn() async {
     if (ke.currentState!.validate()) {
       ke.currentState!.save();
       loding = true;
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: "$email@gmail.com", password: pass!)
-          .then((value) {
-        uid = FirebaseAuth.instance.currentUser!.uid;
-        print('ؤقث');
-        FirebaseMessaging.instance.getToken().then((token) async {
-          loding = true;
+      update();
+      try {
+        await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: "$email@gmail.com", password: pass!)
+            .then((value) {
           Get.offAll(() => MyHomePage());
-          await FirebaseFirestore.instance
-              .collection('token')
-              .doc(uid)
-              .set({"name": name, "token": token, "uid": uid, "rank": 0});
-        }).then((value) {
-          print('dddddddddddddddddd');
-          update();
         });
-      });
+      } catch (e) {
+        loding = false;
+        update();
+
+        Get.snackbar('', '',
+            barBlur: 20,
+            messageText: Directionality(
+                textDirection: TextDirection.rtl,
+                child: ineed.custmText(data: e.toString())),
+            titleText: Directionality(
+              textDirection: TextDirection.rtl,
+              child: ineed.custmText(data: 'حدث خطأ'),
+            ),
+            duration: Duration(seconds: 4));
+      }
     }
   }
 }

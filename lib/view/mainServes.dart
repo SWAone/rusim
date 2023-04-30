@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:rusim/controller/homeC.dart';
 
 import '../constns/AppColor.dart';
 import '../controller/servesController.dart';
@@ -15,82 +16,85 @@ class mainServes extends StatelessWidget {
   mainServes({super.key});
   servesController sc = Get.put(servesController());
   DateTime selectedTime = DateTime.now();
-
+  homeC homc = Get.put(homeC());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.defaultDialog(
-              content: Directionality(
-                textDirection: TextDirection.rtl,
-                child: Form(
-                  key: sc.formk,
-                  child: Column(
-                    children: [
-                      ineed.custemTextForm(
-                        lable: 'اسم الخدمة ',
-                        onSaved: (p0) {
-                          sc.title = p0;
-                        },
-                      ),
-                      Divider(),
-                      ElevatedButton(
-                        onPressed: () async {
-                          DatePicker.showTimePicker(
-                            context,
-                            currentTime: selectedTime,
-                            showSecondsColumn:
-                                false, // لإظهار أعمدة الثواني في الاختيار ، قم بتعيينها على true
-                            onChanged: (DateTime newTime) {
-                              print((newTime.hour * 60) + newTime.minute);
-                              sc.time = (newTime.hour * 60) + newTime.minute;
-                              //  print( newTime.minute) ;
-                              // يتم استدعاء هذا الدالة في كل مرة يتم فيها تغيير الوقت المحدد
-                              print(
-                                  'Selected Time: ${newTime.hour}:${newTime.minute}');
-                            },
-                            onConfirm: (DateTime finalTime) {
-                              sc.time =
-                                  (finalTime.hour * 60) + finalTime.minute;
-                              // يتم استدعاء هذه الدالة بعد النقر على زر "تأكيد"
-                              selectedTime = finalTime;
-                            },
-                          );
-                        },
-                        child: Icon(
-                          Icons.timer,
-                          color: Colors.black,
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
+      floatingActionButton: homc.rank == 1
+          ? FloatingActionButton(
+              onPressed: () {
+                Get.defaultDialog(
+                    content: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Form(
+                        key: sc.formk,
+                        child: Column(
+                          children: [
+                            ineed.custemTextForm(
+                              lable: 'اسم الخدمة ',
+                              onSaved: (p0) {
+                                sc.title = p0;
+                              },
                             ),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 16.0, horizontal: 32.0),
-                            backgroundColor: Colors.white),
+                            Divider(),
+                            ElevatedButton(
+                              onPressed: () async {
+                                DatePicker.showTimePicker(
+                                  context,
+                                  currentTime: selectedTime,
+                                  showSecondsColumn:
+                                      false, // لإظهار أعمدة الثواني في الاختيار ، قم بتعيينها على true
+                                  onChanged: (DateTime newTime) {
+                                    print((newTime.hour * 60) + newTime.minute);
+                                    sc.time =
+                                        (newTime.hour * 60) + newTime.minute;
+                                    //  print( newTime.minute) ;
+                                    // يتم استدعاء هذا الدالة في كل مرة يتم فيها تغيير الوقت المحدد
+                                    print(
+                                        'Selected Time: ${newTime.hour}:${newTime.minute}');
+                                  },
+                                  onConfirm: (DateTime finalTime) {
+                                    sc.time = (finalTime.hour * 60) +
+                                        finalTime.minute;
+                                    // يتم استدعاء هذه الدالة بعد النقر على زر "تأكيد"
+                                    selectedTime = finalTime;
+                                  },
+                                );
+                              },
+                              child: Icon(
+                                Icons.timer,
+                                color: Colors.black,
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 16.0, horizontal: 32.0),
+                                  backgroundColor: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              textConfirm: 'اضافة',
-              confirmTextColor: Colors.black,
-              onConfirm: () {
-                sc.addServes();
+                    ),
+                    textConfirm: 'اضافة',
+                    confirmTextColor: Colors.black,
+                    onConfirm: () {
+                      sc.addServes();
+                    },
+                    backgroundColor: AppColor.mainColor,
+                    titleStyle: const TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'kufi',
+                    ),
+                    title: 'ادخال معلومات الخدمة',
+                    buttonColor: Colors.white);
               },
               backgroundColor: AppColor.mainColor,
-              titleStyle: const TextStyle(
-                color: Colors.white,
-                fontFamily: 'kufi',
-              ),
-              title: 'ادخال معلومات الخدمة',
-              buttonColor: Colors.white);
-        },
-        backgroundColor: AppColor.mainColor,
-        child: Icon(Icons.add),
-      ),
+              child: Icon(Icons.add),
+            )
+          : null,
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: Padding(

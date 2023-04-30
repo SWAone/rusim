@@ -31,22 +31,10 @@ class login extends StatelessWidget {
                     ),
                     Center(
                         child: ineed.custmText(
-                            data: 'انشاء حساب',
+                            data: 'تسجيل الدخول',
                             color: AppColor.mainColor,
                             fontSize: 20.sp,
                             isbold: true)),
-                    ineed.custmContainer(
-                      havShdow: false,
-                      colorr: AppColor.mainColor,
-                      w: double.infinity,
-                      child: ineed.custemTextForm(
-                        lable: 'الاسم',
-                        onSaved: (p0) {
-                          cc.name = p0;
-                        },
-                      ),
-                      onTap: () {},
-                    ),
                     Divider(),
                     ineed.custmContainer(
                       havShdow: false,
@@ -84,7 +72,7 @@ class login extends StatelessWidget {
                                   : 'جار التحميل...',
                               color: Colors.white)),
                       onTap: () {
-                        cc.CreateAcount();
+                        cc.sginIn();
                       },
                     ),
                   ],

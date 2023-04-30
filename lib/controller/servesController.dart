@@ -84,7 +84,7 @@ class servesController extends GetxController {
           timeSeceted.day, timeSeceted.hour);
       DateTime endTime = startTime.add(Duration(minutes: endTimee));
       homc.sendNotification(
-          " قام  ${homc.name}باضافة حجز جديد  $servesName لعضو الفريق $staffName",
+          " قام  ${homc.name}باضافة حجز جديد  $servesName لقائمة  $staffName",
           "من الساعة ${timeSeceted.hour} : ${timeSeceted.minute} لتاريخ ${timeSeceted.year}/${timeSeceted.month}/${timeSeceted.day} مدة الحجز ${timeSeceted.hour + endTimee} دقيقة",
           " ");
       await FirebaseFirestore.instance

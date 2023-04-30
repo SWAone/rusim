@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:rusim/constns/AppColor.dart';
 import 'package:rusim/controller/homeC.dart';
 import 'package:rusim/controller/homeController.dart';
+import 'package:rusim/main.dart';
 import 'package:rusim/view/Auth/login.dart';
 import 'package:rusim/view/pointsPage.dart';
 import 'package:rusim/view/serves.dart';
@@ -43,7 +44,17 @@ class home extends StatelessWidget {
                               child: ineed.custmText(data: 'اختر المجموعة')),
                           onTap: () {
                             Get.snackbar('', '',
-                                duration: Duration(minutes: 20));
+                                barBlur: 20,
+                                messageText: Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: ineed.custmText(
+                                        data: 'في حال لم تظهر حجوزات الكادر')),
+                                titleText: Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: ineed.custmText(
+                                      data: 'اضغط على الاسم مرة اخرى'),
+                                ),
+                                duration: Duration(seconds: 4));
                             Get.defaultDialog(
                                 title: "حدد المجموعة والعضو",
                                 titleStyle: TextStyle(
@@ -135,7 +146,8 @@ class home extends StatelessWidget {
                                                                             .items[index]
                                                                         ['id']);
 
-                                                                Get.back();
+                                                                Get.offAll(
+                                                                    MyHomePage());
                                                               }
                                                             },
                                                             child: Center(
@@ -153,7 +165,7 @@ class home extends StatelessWidget {
                                                         );
                                                       },
                                                     ),
-                                                  )
+                                                  ),
                                                 ],
                                               ));
                                         },
@@ -170,9 +182,9 @@ class home extends StatelessWidget {
                                               Container(
                                                 width: 90.w,
                                                 child: ineed.custmText(
-                                                    data: cc.person.length >
-                                                                0 &&
-                                                            cc.items.length > 0
+                                                    data: cc.person
+                                                                .isNotEmpty &&
+                                                            cc.items.isNotEmpty
                                                         ? '${cc.person[cc.personIndex]['name']}'
                                                         : 'اختر عضو',
                                                     color: Colors.black),
@@ -180,7 +192,7 @@ class home extends StatelessWidget {
                                               Icon(
                                                 Icons.arrow_drop_down_outlined,
                                                 color: AppColor.mainColor,
-                                              )
+                                              ),
                                             ],
                                           ),
                                           onTap: () {
@@ -190,7 +202,7 @@ class home extends StatelessWidget {
                                                     color: Colors.white,
                                                     fontFamily: 'kufi',
                                                   ),
-                                                  title: 'اعضاء المجموعة',
+                                                  title: 'كادر العمل',
                                                   backgroundColor:
                                                       AppColor.mainColor,
                                                   content: Column(
@@ -233,9 +245,8 @@ class home extends StatelessWidget {
                                                                             personDocid:
                                                                                 cc.person[index]['id'],
                                                                             groupId: cc.items[cc.index]['id']);
-                                                                        Get.back();
-                                                                        ///////
-                                                                        ///
+                                                                        Get.offAll(
+                                                                            MyHomePage());
                                                                       },
                                                                       child:
                                                                           Center(
@@ -254,23 +265,6 @@ class home extends StatelessWidget {
                                                           },
                                                         ),
                                                       ),
-                                                      TextButton(
-                                                          onPressed: () {
-                                                            Get.to(() => pontsPage(
-                                                                docid: cc.items[
-                                                                        cc.index]
-                                                                    ['id'],
-                                                                personId:
-                                                                    cc.person[cc
-                                                                            .personIndex]
-                                                                        [
-                                                                        'id']));
-                                                          },
-                                                          child: ineed.custmText(
-                                                              data:
-                                                                  'ادارة حجوزات العضو المحدد',
-                                                              color:
-                                                                  Colors.white))
                                                     ],
                                                   ));
                                             }
@@ -280,6 +274,11 @@ class home extends StatelessWidget {
                                 ));
                           },
                         ),
+                        ineed.custmText(
+                            data: cc.person.isNotEmpty
+                                ? '${cc.person[cc.personIndex]['name']}'
+                                : 'جار التحميل ...',
+                            color: Colors.black),
                         IconButton(
                             onPressed: () {
                               AwesomeDialog(
@@ -319,123 +318,10 @@ class home extends StatelessWidget {
                             )),
                       ],
                     ),
-
-                    // Center(
-                    //   child: DropdownButtonHideUnderline(
-                    //     child: DropdownButton2(
-                    //       hint: cc.loding
-                    //           ? ineed.custmText(
-                    //               data: 'جار التحميل ...', color: Colors.black)
-                    //           : ineed.custmText(
-                    //               data: cc.items[0],
-                    //               color: AppColor.mainColor,
-                    //               isbold: true,
-                    //               fontSize: 20.sp),
-                    //       items: cc.items
-                    //           .map((item) => DropdownMenuItem<String>(
-                    //               value: item,
-                    //               child: Padding(
-                    //                 padding: const EdgeInsets.all(8.0),
-                    //                 child: Container(
-                    //                   decoration: BoxDecoration(
-                    //                     border: Border.all(
-                    //                       color: AppColor.mainColor,
-                    //                     ),
-                    //                     borderRadius: BorderRadius.circular(10),
-                    //                   ),
-                    //                   child: Row(
-                    //                     mainAxisAlignment:
-                    //                         MainAxisAlignment.spaceEvenly,
-                    //                     children: [
-                    //                       Padding(
-                    //                         padding: const EdgeInsets.all(8.0),
-                    //                         child: ineed.custmText(
-                    //                             data: item,
-                    //                             color: AppColor.mainColor,
-                    //                             isbold: true),
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ),
-                    //               )))
-                    //           .toList(),
-                    //       value: cc.selectedValue,
-                    //       onChanged: (value) {
-                    //         print(value);
-                    //         cc.update();
-                    //         cc.selectedValue = value as String;
-
-                    //         cc.name = cc.selectedValue!;
-                    //       },
-                    //       buttonStyleData: const ButtonStyleData(
-                    //         height: 60,
-                    //         width: double.infinity,
-                    //       ),
-                    //       menuItemStyleData: const MenuItemStyleData(
-                    //         height: 70,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // DropdownButtonHideUnderline(
-                    //   child: DropdownButton2(
-                    //     hint: cc.loding
-                    //         ? ineed.custmText(
-                    //             data: 'جار التحميل ...', color: Colors.black)
-                    //         : ineed.custmText(
-                    //             data: cc.items[0],
-                    //             color: AppColor.mainColor,
-                    //             isbold: true,
-                    //             fontSize: 20.sp),
-                    //     items: cc.items
-                    //         .map((item) => DropdownMenuItem<String>(
-                    //             value: item,
-                    //             child: Padding(
-                    //               padding: const EdgeInsets.all(8.0),
-                    //               child: Container(
-                    //                 decoration: BoxDecoration(
-                    //                   border: Border.all(
-                    //                     color: AppColor.mainColor,
-                    //                   ),
-                    //                   borderRadius: BorderRadius.circular(10),
-                    //                 ),
-                    //                 child: Row(
-                    //                   mainAxisAlignment:
-                    //                       MainAxisAlignment.spaceEvenly,
-                    //                   children: [
-                    //                     Padding(
-                    //                       padding: const EdgeInsets.all(8.0),
-                    //                       child: ineed.custmText(
-                    //                           data: item,
-                    //                           color: AppColor.mainColor,
-                    //                           isbold: true),
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //             )))
-                    //         .toList(),
-                    //     value: cc.selectedValue,
-                    //     onChanged: (value) {
-                    //       cc.update();
-                    //       cc.selectedValue = value as String;
-
-                    //       cc.name = cc.selectedValue!;
-                    //     },
-                    //     buttonStyleData: const ButtonStyleData(
-                    //       height: 60,
-                    //       width: double.infinity,
-                    //     ),
-                    //     menuItemStyleData: const MenuItemStyleData(
-                    //       height: 70,
-                    //     ),
-                    //   ),
-                    // ),
                     Expanded(
                       child: Container(
                         child: SfCalendar(
-                          allowViewNavigation:
-                              true, // قم بتفعيل هذا الخيار للسماح بالتكبير والتصغير
+                          allowViewNavigation: true,
 
                           onSelectionChanged: (calendarSelectionDetails) {
                             timeSeceted = DateTime.now();
@@ -448,15 +334,10 @@ class home extends StatelessWidget {
                               if (details.targetElement ==
                                   CalendarElement.appointment) {
                                 print(details.date);
-                                AwesomeDialog(
-                                  context: context,
-                                  dialogType: DialogType.warning,
-                                  animType: AnimType.rightSlide,
-                                  title: 'حذف',
-                                  desc: 'هل تريد حذف هذا الحجز',
-                                  btnCancelOnPress: () {},
-                                  btnOkOnPress: () {},
-                                )..show();
+                                Get.to(() => pontsPage(
+                                    name: cc.person[cc.personIndex]['name'],
+                                    docid: cc.items[cc.index]['id'],
+                                    personId: cc.person[cc.personIndex]['id']));
                                 print('محجوز');
                               } else {
                                 if (cc.person.length > 0) {

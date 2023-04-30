@@ -38,14 +38,14 @@ class stafPerson extends StatelessWidget {
                           ineed.custemTextForm(
                             lable: 'انشاء معرف',
                             onSaved: (p0) {
-                              // cc.personName = p0;
+                              cc.email = p0;
                             },
                           ),
                           Divider(),
                           ineed.custemTextForm(
                             lable: 'كلمة سر',
                             onSaved: (p0) {
-                              // cc.personName = p0;
+                              cc.pass = p0;
                             },
                           ),
                         ],

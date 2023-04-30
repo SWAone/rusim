@@ -9,8 +9,12 @@ import 'package:rusim/controller/staffController.dart';
 import 'package:rusim/ineed/ineed.dart';
 import 'package:rusim/view/stafPerson.dart';
 
+import '../controller/homeC.dart';
+
 class staff extends StatelessWidget {
-  const staff({super.key});
+  homeC homc = Get.put(homeC());
+
+  staff({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,51 +45,53 @@ class staff extends StatelessWidget {
                     SizedBox(
                       height: 15.h,
                     ),
-                    ineed.custmContainer(
-                      colorr: Color.fromARGB(255, 49, 171, 169),
-                      w: double.infinity,
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: ineed.custmText(
-                              data: 'اضافة مجموعة جديده ',
-                              fontSize: 14.sp,
-                              color: Colors.white,
-                              isbold: true),
-                        ),
-                      ),
-                      onTap: () {
-                        Get.defaultDialog(
-                            content: Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Form(
-                                key: cc.formk,
-                                child: Column(
-                                  children: [
-                                    ineed.custemTextForm(
-                                      lable: 'اسم المجموعه',
-                                      onSaved: (p0) {
-                                        cc.GroupName = p0;
-                                      },
-                                    ),
-                                  ],
-                                ),
+                    homc.rank == 1
+                        ? ineed.custmContainer(
+                            colorr: Color.fromARGB(255, 49, 171, 169),
+                            w: double.infinity,
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: ineed.custmText(
+                                    data: 'انشاء كادر عمل جديد ',
+                                    fontSize: 14.sp,
+                                    color: Colors.white,
+                                    isbold: true),
                               ),
                             ),
-                            textConfirm: 'اضافة',
-                            confirmTextColor: Colors.black,
-                            onConfirm: () {
-                              cc.addGroup();
+                            onTap: () {
+                              Get.defaultDialog(
+                                  content: Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: Form(
+                                      key: cc.formk,
+                                      child: Column(
+                                        children: [
+                                          ineed.custemTextForm(
+                                            lable: 'اسم المجموعه',
+                                            onSaved: (p0) {
+                                              cc.GroupName = p0;
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  textConfirm: 'اضافة',
+                                  confirmTextColor: Colors.black,
+                                  onConfirm: () {
+                                    cc.addGroup();
+                                  },
+                                  backgroundColor: AppColor.mainColor,
+                                  titleStyle: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'kufi',
+                                  ),
+                                  title: 'ادخال اسم المجموعه',
+                                  buttonColor: Colors.white);
                             },
-                            backgroundColor: AppColor.mainColor,
-                            titleStyle: const TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'kufi',
-                            ),
-                            title: 'ادخال اسم المجموعه',
-                            buttonColor: Colors.white);
-                      },
-                    ),
+                          )
+                        : Text(''),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -94,6 +100,9 @@ class staff extends StatelessWidget {
                         color: AppColor.mainColor,
                         isbold: true,
                         fontSize: 15.sp),
+                    SizedBox(
+                      height: 10.h,
+                    ),
                     ListView.separated(
                         physics: BouncingScrollPhysics(),
                         shrinkWrap: true,
