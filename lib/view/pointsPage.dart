@@ -61,11 +61,23 @@ class pontsPage extends StatelessWidget {
                                         children: [
                                           ineed.custmText(
                                               data:
+                                                  '${cc.Pointss[index]['phone']}',
+                                              color: Colors.black),
+                                          ineed.custmText(
+                                              data: ' | ',
+                                              color: AppColor.mainColor,
+                                              isbold: true,
+                                              fontSize: 20.sp),
+                                          ineed.custmText(
+                                              data:
                                                   '${cc.Pointss[index]['title']}',
                                               color: Colors.black),
                                           IconButton(
                                               onPressed: () {
                                                 cc.deletpoints(
+                                                    coustmerName:
+                                                        cc.Pointss[index]
+                                                            ['title'],
                                                     docid: cc.Pointss[index]
                                                         ['id'],
                                                     gropid: docid,
@@ -73,6 +85,12 @@ class pontsPage extends StatelessWidget {
                                               },
                                               icon: Icon(
                                                 Icons.delete,
+                                                color: Colors.red,
+                                              )),
+                                          IconButton(
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                Icons.edit,
                                                 color: Colors.red,
                                               ))
                                         ],

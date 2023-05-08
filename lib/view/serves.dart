@@ -90,6 +90,13 @@ class serves extends StatelessWidget {
                                               cc.title = p0;
                                             },
                                           ),
+                                          Divider(),
+                                          ineed.custemTextForm(
+                                            lable: 'رقم الهاتف',
+                                            onSaved: (p0) {
+                                              cc.phone = p0;
+                                            },
+                                          ),
                                         ],
                                       ),
                                     ),

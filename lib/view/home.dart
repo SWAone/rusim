@@ -321,6 +321,7 @@ class home extends StatelessWidget {
                     Expanded(
                       child: Container(
                         child: SfCalendar(
+                          showWeekNumber: true,
                           allowViewNavigation: true,
 
                           onSelectionChanged: (calendarSelectionDetails) {

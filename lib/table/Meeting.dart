@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class Meeting {
   /// Creates a meeting class with required details.
-  Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay);
+  Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay,
+      this.phone);
 
   /// Event name which is equivalent to subject property of [Appointment].
   String eventName;
+  String phone;
 
   /// From which is equivalent to start time property of [Appointment].
   DateTime from;

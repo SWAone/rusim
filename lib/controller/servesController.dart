@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
@@ -19,7 +20,7 @@ class servesController extends GetxController {
   GlobalKey<FormState> formk = new GlobalKey<FormState>();
   GlobalKey<FormState> formk2 = new GlobalKey<FormState>();
 
-  String? title;
+  String? title, phone;
   int? time;
 
   showServes() async {
@@ -83,10 +84,12 @@ class servesController extends GetxController {
       DateTime startTime = DateTime(timeSeceted.year, timeSeceted.month,
           timeSeceted.day, timeSeceted.hour);
       DateTime endTime = startTime.add(Duration(minutes: endTimee));
-      homc.sendNotification(
-          " قام  ${homc.name}باضافة حجز جديد  $servesName لقائمة  $staffName",
-          "من الساعة ${timeSeceted.hour} : ${timeSeceted.minute} لتاريخ ${timeSeceted.year}/${timeSeceted.month}/${timeSeceted.day} مدة الحجز ${timeSeceted.hour + endTimee} دقيقة",
-          " ");
+      homc
+          .sendNotification(
+              " قام ${homc.name} باضافة حجز جديد $servesName لقائمة  $staffName",
+              "من الساعة ${timeSeceted.hour} : ${timeSeceted.minute} لتاريخ ${timeSeceted.year}/${timeSeceted.month}/${timeSeceted.day} مدة الحجز ${timeSeceted.minute + endTimee} دقيقة",
+              " ")
+          .then((value) {});
       await FirebaseFirestore.instance
           .collection('AllGroup')
           .doc(groupId)
@@ -96,8 +99,10 @@ class servesController extends GetxController {
           .add({
         "title": title,
         "startTime": startTime,
-        "endTime": endTime
+        "endTime": endTime,
+        "phone": phone
       }).then((value) {
+        print(phone);
         update();
       });
 

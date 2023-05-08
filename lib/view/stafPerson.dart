@@ -8,9 +8,12 @@ import 'package:rusim/constns/AppColor.dart';
 import 'package:rusim/controller/staffController.dart';
 import 'package:rusim/ineed/ineed.dart';
 
+import '../controller/homeC.dart';
+
 class stafPerson extends StatelessWidget {
   String docid;
   stafPerson({super.key, required this.docid});
+  homeC homc = Get.put(homeC());
 
   @override
   Widget build(BuildContext context) {
@@ -19,55 +22,57 @@ class stafPerson extends StatelessWidget {
       init: satffController(),
       builder: (cc) {
         return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Get.defaultDialog(
-                  content: Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Form(
-                      key: cc.formk,
-                      child: Column(
-                        children: [
-                          ineed.custemTextForm(
-                            lable: 'الاسم',
-                            onSaved: (p0) {
-                              cc.personName = p0;
-                            },
+          floatingActionButton: homc.rank == 1
+              ? FloatingActionButton(
+                  onPressed: () {
+                    Get.defaultDialog(
+                        content: Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: Form(
+                            key: cc.formk,
+                            child: Column(
+                              children: [
+                                ineed.custemTextForm(
+                                  lable: 'الاسم',
+                                  onSaved: (p0) {
+                                    cc.personName = p0;
+                                  },
+                                ),
+                                Divider(),
+                                ineed.custemTextForm(
+                                  lable: 'انشاء معرف',
+                                  onSaved: (p0) {
+                                    cc.email = p0;
+                                  },
+                                ),
+                                Divider(),
+                                ineed.custemTextForm(
+                                  lable: 'كلمة سر',
+                                  onSaved: (p0) {
+                                    cc.pass = p0;
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                          Divider(),
-                          ineed.custemTextForm(
-                            lable: 'انشاء معرف',
-                            onSaved: (p0) {
-                              cc.email = p0;
-                            },
-                          ),
-                          Divider(),
-                          ineed.custemTextForm(
-                            lable: 'كلمة سر',
-                            onSaved: (p0) {
-                              cc.pass = p0;
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  textConfirm: 'اضافة',
-                  confirmTextColor: Colors.black,
-                  onConfirm: () {
-                    cc.insertStaff(doicId: docid);
+                        ),
+                        textConfirm: 'اضافة',
+                        confirmTextColor: Colors.black,
+                        onConfirm: () {
+                          cc.insertStaff(doicId: docid);
+                        },
+                        backgroundColor: AppColor.mainColor,
+                        titleStyle: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'kufi',
+                        ),
+                        title: 'اضافة عضو جديد',
+                        buttonColor: Colors.white);
                   },
                   backgroundColor: AppColor.mainColor,
-                  titleStyle: const TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'kufi',
-                  ),
-                  title: 'اضافة عضو جديد',
-                  buttonColor: Colors.white);
-            },
-            backgroundColor: AppColor.mainColor,
-            child: Icon(Icons.add),
-          ),
+                  child: Icon(Icons.add),
+                )
+              : null,
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -120,53 +125,64 @@ class stafPerson extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(10)),
                                           child: ListTile(
-                                            trailing: IconButton(
-                                                onPressed: () {
-                                                  AwesomeDialog(
-                                                      buttonsTextStyle:
-                                                          TextStyle(
+                                            trailing: homc.rank == 1
+                                                ? IconButton(
+                                                    onPressed: () {
+                                                      AwesomeDialog(
+                                                          buttonsTextStyle:
+                                                              TextStyle(
+                                                                  fontFamily:
+                                                                      'kufi',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 20
+                                                                      .sp),
+                                                          descTextStyle:
+                                                              TextStyle(
+                                                                  fontFamily:
+                                                                      'kufi',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize:
+                                                                      20.sp),
+                                                          context: context,
+                                                          dialogType:
+                                                              DialogType.info,
+                                                          animType: AnimType
+                                                              .rightSlide,
+                                                          title: 'حذف',
+                                                          titleTextStyle: TextStyle(
                                                               fontFamily:
                                                                   'kufi',
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
                                                               fontSize: 20.sp),
-                                                      descTextStyle: TextStyle(
-                                                          fontFamily: 'kufi',
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20.sp),
-                                                      context: context,
-                                                      dialogType:
-                                                          DialogType.info,
-                                                      animType:
-                                                          AnimType.rightSlide,
-                                                      title: 'حذف',
-                                                      titleTextStyle: TextStyle(
-                                                          fontFamily: 'kufi',
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20.sp),
-                                                      desc: 'سيتم حذف العنصر',
-                                                      btnCancelOnPress: () {
-                                                        Get.back();
-                                                      },
-                                                      btnOkOnPress: () {
-                                                        cc.deletstaff(
-                                                          docid: docid,
-                                                          personDocid:
-                                                              cc.AllStaff[index]
-                                                                  ['id'],
-                                                        );
-                                                      },
-                                                      btnOkText: 'حذف',
-                                                      btnCancelText: 'تراجع')
-                                                    ..show();
-                                                },
-                                                icon: Icon(
-                                                  Icons.delete,
-                                                  color: AppColor.mainColor,
-                                                )),
+                                                          desc:
+                                                              'سيتم حذف العنصر',
+                                                          btnCancelOnPress: () {
+                                                            Get.back();
+                                                          },
+                                                          btnOkOnPress: () {
+                                                            cc.deletstaff(
+                                                              docid: docid,
+                                                              personDocid: cc
+                                                                      .AllStaff[
+                                                                  index]['id'],
+                                                            );
+                                                          },
+                                                          btnOkText: 'حذف',
+                                                          btnCancelText:
+                                                              'تراجع')
+                                                        ..show();
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.delete,
+                                                      color: AppColor.mainColor,
+                                                    ))
+                                                : Text(''),
                                             title: ineed.custmText(
                                                 data:
                                                     '${cc.AllStaff[index]['name']}',

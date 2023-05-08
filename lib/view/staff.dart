@@ -122,46 +122,53 @@ class staff extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       child: ListTile(
-                                        trailing: IconButton(
-                                            onPressed: () {
-                                              AwesomeDialog(
-                                                  buttonsTextStyle: TextStyle(
-                                                      fontFamily: 'kufi',
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20.sp),
-                                                  descTextStyle: TextStyle(
-                                                      fontFamily: 'kufi',
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20.sp),
-                                                  context: context,
-                                                  dialogType: DialogType.info,
-                                                  animType: AnimType.rightSlide,
-                                                  title: 'حذف',
-                                                  titleTextStyle: TextStyle(
-                                                      fontFamily: 'kufi',
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20.sp),
-                                                  desc: 'سيتم حذف العنصر',
-                                                  btnCancelOnPress: () {
-                                                    Get.back();
-                                                  },
-                                                  btnOkOnPress: () {
-                                                    cc.deletGroup(
-                                                        GroupNmae:
-                                                            cc.AllGroup[index]
-                                                                ['id']);
-                                                  },
-                                                  btnOkText: 'حذف',
-                                                  btnCancelText: 'تراجع')
-                                                ..show();
-                                            },
-                                            icon: Icon(
-                                              Icons.delete,
-                                              color: AppColor.mainColor,
-                                            )),
+                                        trailing: homc.rank == 1
+                                            ? IconButton(
+                                                onPressed: () {
+                                                  AwesomeDialog(
+                                                      buttonsTextStyle:
+                                                          TextStyle(
+                                                              fontFamily:
+                                                                  'kufi',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 20.sp),
+                                                      descTextStyle: TextStyle(
+                                                          fontFamily: 'kufi',
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20.sp),
+                                                      context: context,
+                                                      dialogType:
+                                                          DialogType.info,
+                                                      animType:
+                                                          AnimType.rightSlide,
+                                                      title: 'حذف',
+                                                      titleTextStyle: TextStyle(
+                                                          fontFamily: 'kufi',
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20.sp),
+                                                      desc: 'سيتم حذف العنصر',
+                                                      btnCancelOnPress: () {
+                                                        Get.back();
+                                                      },
+                                                      btnOkOnPress: () {
+                                                        cc.deletGroup(
+                                                            GroupNmae: cc
+                                                                    .AllGroup[
+                                                                index]['id']);
+                                                      },
+                                                      btnOkText: 'حذف',
+                                                      btnCancelText: 'تراجع')
+                                                    ..show();
+                                                },
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color: AppColor.mainColor,
+                                                ))
+                                            : Text(''),
                                         title: ineed.custmText(
                                             data:
                                                 '${cc.AllGroup[index]['name']}',

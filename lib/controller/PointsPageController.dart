@@ -2,9 +2,12 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rusim/controller/homeC.dart';
+import 'package:rusim/ineed/ineed.dart';
 
 class pointsPageController extends GetxController {
   String docid, personid;
+  homeC homc = Get.put(homeC());
   pointsPageController({required this.personid, required this.docid}) {
     this.docid = docid;
     this.personid = personid;
@@ -26,6 +29,7 @@ class pointsPageController extends GetxController {
             "title": element.data()['title'],
             "startTime": element.data()['startTime'].toDate(),
             "endTime": element.data()['endTime'].toDate(),
+            "phone": element.data()['phone'],
             "id": element.id,
           });
         });
@@ -43,8 +47,13 @@ class pointsPageController extends GetxController {
 
   void deletpoints(
       {required String gropid,
+      required coustmerName,
       required String persoid,
       required String docid}) async {
+    homc.sendNotification(
+        " قام  ${homc.name} بحذف  حجز ${homc.person[homc.personIndex]['name']}",
+        " اسم الزبون الذي تم حذفه $coustmerName",
+        " ");
     AwesomeDialog(
         dialogType: DialogType.noHeader,
         context: Get.context!,
@@ -64,7 +73,19 @@ class pointsPageController extends GetxController {
         .delete()
         .then((value) {
       update();
+
       Get.back();
+      AwesomeDialog(
+          body: ineed.custmText(
+              data: 'حدث الصفحة لمشاهدة التغيرات', color: Colors.black),
+          dialogType: DialogType.success,
+          context: Get.context!,
+          title: 'تم الحذف',
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontFamily: 'kufi',
+            fontWeight: FontWeight.bold,
+          )).show();
       getPoints(docid: docid, persoid: personid);
     });
   }

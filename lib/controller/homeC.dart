@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../constns/AppColor.dart';
+import '../ineed/ineed.dart';
 import '../table/Meeting.dart';
 import '../table/MeetingDataSource.dart';
 
@@ -98,11 +100,13 @@ class homeC extends GetxController {
       (value) {
         value.docs.forEach((element) {
           Meeting newMeeting = Meeting(
-              element.data()['title'],
-              element.data()['startTime'].toDate(),
-              element.data()['endTime'].toDate(),
-              AppColor.mainColor,
-              false);
+            element.data()['title'],
+            element.data()['startTime'].toDate(),
+            element.data()['endTime'].toDate(),
+            AppColor.mainColor,
+            false,
+            element.data()['phone'],
+          );
           meetings.add(newMeeting);
         });
       },
@@ -149,10 +153,17 @@ class homeC extends GetxController {
 
   getMessge() {
     FirebaseMessaging.onMessage.listen((event) {
-      print('=====================');
-      print(event.notification!.title);
-      print(event.notification!.body);
-      // print(event.notification!.toMap()['name']);
+      Get.snackbar('', '',
+          backgroundColor: AppColor.mainColor,
+          barBlur: 60,
+          messageText: Directionality(
+              textDirection: TextDirection.rtl,
+              child: ineed.custmText(data: '${event.notification!.body}')),
+          titleText: Directionality(
+            textDirection: TextDirection.rtl,
+            child: ineed.custmText(data: '${event.notification!.title}'),
+          ),
+          duration: Duration(seconds: 4));
     });
   }
 }

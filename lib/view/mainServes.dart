@@ -145,41 +145,51 @@ class mainServes extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10)),
                                 child: cc.servesList.length > 0
                                     ? ListTile(
-                                        trailing: IconButton(
-                                          icon: Icon(Icons.delete),
-                                          onPressed: () {
-                                            AwesomeDialog(
-                                                buttonsTextStyle: TextStyle(
-                                                    fontFamily: 'kufi',
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20.sp),
-                                                descTextStyle: TextStyle(
-                                                    fontFamily: 'kufi',
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20.sp),
-                                                context: context,
-                                                dialogType: DialogType.info,
-                                                animType: AnimType.rightSlide,
-                                                title: 'حذف',
-                                                titleTextStyle: TextStyle(
-                                                    fontFamily: 'kufi',
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20.sp),
-                                                desc: 'سيتم حذف العنصر',
-                                                btnCancelOnPress: () {
-                                                  Get.back();
+                                        trailing: homc.rank == 1
+                                            ? IconButton(
+                                                icon: Icon(Icons.delete),
+                                                onPressed: () {
+                                                  AwesomeDialog(
+                                                      buttonsTextStyle:
+                                                          TextStyle(
+                                                              fontFamily:
+                                                                  'kufi',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 20.sp),
+                                                      descTextStyle: TextStyle(
+                                                          fontFamily: 'kufi',
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20.sp),
+                                                      context: context,
+                                                      dialogType:
+                                                          DialogType.info,
+                                                      animType:
+                                                          AnimType.rightSlide,
+                                                      title: 'حذف',
+                                                      titleTextStyle: TextStyle(
+                                                          fontFamily: 'kufi',
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20.sp),
+                                                      desc: 'سيتم حذف العنصر',
+                                                      btnCancelOnPress: () {
+                                                        Get.back();
+                                                      },
+                                                      btnOkOnPress: () {
+                                                        cc.deletServes(
+                                                            doic: cc.servesList[
+                                                                index]['id']);
+                                                      },
+                                                      btnOkText: 'حذف',
+                                                      btnCancelText: 'تراجع')
+                                                    ..show();
                                                 },
-                                                btnOkOnPress: () {
-                                                  cc.deletServes(
-                                                      doic: cc.servesList[index]
-                                                          ['id']);
-                                                },
-                                                btnOkText: 'حذف',
-                                                btnCancelText: 'تراجع')
-                                              ..show();
-                                          },
-                                          color: AppColor.mainColor,
-                                        ),
+                                                color: AppColor.mainColor,
+                                              )
+                                            : Text(''),
                                         title: ineed.custmText(
                                             data:
                                                 '${cc.servesList[index]['title']}',
