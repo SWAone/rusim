@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:rusim/constns/AppColor.dart';
 import 'package:rusim/controller/PointsPageController.dart';
 import 'package:rusim/controller/homeC.dart';
-import 'package:rusim/controller/homeController.dart';
+import 'package:rusim/view/edit.dart';
 import 'package:rusim/view/serves.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../ineed/ineed.dart';
@@ -14,6 +14,9 @@ import '../table/MeetingDataSource.dart';
 
 class pontsPage extends StatelessWidget {
   String docid, personId, name;
+  TextEditingController textControllerTitle = TextEditingController();
+  TextEditingController textControllerPhone = TextEditingController();
+
   pontsPage(
       {super.key,
       required this.docid,
@@ -39,68 +42,93 @@ class pontsPage extends StatelessWidget {
                         height: 20.h,
                       ),
                       ineed.custmText(
-                          data: "حجوزات $name", color: Colors.black),
+                          data: "حجوزات $name",
+                          color: Colors.black,
+                          isbold: true),
+                      SizedBox(
+                        height: 20.h,
+                      ),
                       Center(
-                        child: ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          separatorBuilder: (context, index) {
-                            return Divider();
-                          },
-                          itemCount:
-                              cc.Pointss.length > 0 ? cc.Pointss.length : 4,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return cc.Pointss.length > 0
-                                ? ineed.custmContainer(
-                                    colorr: Colors.white,
-                                    onTap: () {},
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          ineed.custmText(
-                                              data:
-                                                  '${cc.Pointss[index]['phone']}',
-                                              color: Colors.black),
-                                          ineed.custmText(
-                                              data: ' | ',
-                                              color: AppColor.mainColor,
-                                              isbold: true,
-                                              fontSize: 20.sp),
-                                          ineed.custmText(
-                                              data:
-                                                  '${cc.Pointss[index]['title']}',
-                                              color: Colors.black),
-                                          IconButton(
+                        child: Container(
+                          child: ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
+                            separatorBuilder: (context, index) {
+                              return Divider();
+                            },
+                            itemCount:
+                                cc.Pointss.length > 0 ? cc.Pointss.length : 4,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return cc.Pointss.length > 0
+                                  ? Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: ListTile(
+                                          trailing: IconButton(
                                               onPressed: () {
-                                                cc.deletpoints(
-                                                    coustmerName:
-                                                        cc.Pointss[index]
-                                                            ['title'],
-                                                    docid: cc.Pointss[index]
-                                                        ['id'],
-                                                    gropid: docid,
-                                                    persoid: personId);
+                                                Get.to(() => edit(
+                                                      docid: cc.Pointss[index]
+                                                          ['id'],
+                                                      oersonid: personId,
+                                                      gropid: docid,
+                                                      phone: cc.Pointss[index]
+                                                          ['phone'],
+                                                      title: cc.Pointss[index]
+                                                          ['title'],
+                                                    ));
+                                              },
+                                              icon: Icon(
+                                                Icons.edit,
+                                                color: Colors.red,
+                                              )),
+                                          leading: IconButton(
+                                              onPressed: () {
+                                                AwesomeDialog(
+                                                  buttonsTextStyle: TextStyle(
+                                                      fontFamily: 'kufi',
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  btnOkText: 'نعم',
+                                                  titleTextStyle: TextStyle(
+                                                      fontFamily: 'kufi',
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  title: 'حذف ؟',
+                                                  context: context,
+                                                  btnOkOnPress: () {
+                                                    cc.deletpoints(
+                                                        coustmerName:
+                                                            cc.Pointss[index]
+                                                                ['title'],
+                                                        docid: cc.Pointss[index]
+                                                            ['id'],
+                                                        gropid: docid,
+                                                        persoid: personId);
+                                                  },
+                                                ).show();
                                               },
                                               icon: Icon(
                                                 Icons.delete,
                                                 color: Colors.red,
                                               )),
-                                          IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(
-                                                Icons.edit,
-                                                color: Colors.red,
-                                              ))
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : ineed.custmLoding();
-                          },
+                                          title: ineed.custmText(
+                                              data:
+                                                  '${cc.Pointss[index]['title']}',
+                                              color: Colors.black,
+                                              isbold: true),
+                                          subtitle: ineed.custmText(
+                                            data:
+                                                '${cc.Pointss[index]['phone']}',
+                                            color: Colors.black,
+                                          )),
+                                    )
+                                  : ineed.custmLoding();
+                            },
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

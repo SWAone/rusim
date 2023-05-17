@@ -89,4 +89,52 @@ class pointsPageController extends GetxController {
       getPoints(docid: docid, persoid: personid);
     });
   }
+
+  void UpdatePoint(
+      {required newtitle,
+      required String newphone,
+      required String gropid,
+      required String persoid,
+      required String docid}) async {
+    homc.sendNotification(
+        " قام  ${homc.name} يتعديل  حجز ${homc.person[homc.personIndex]['name']}",
+        "تعديل حجز",
+        " ");
+    AwesomeDialog(
+        dialogType: DialogType.noHeader,
+        context: Get.context!,
+        title: 'جار التحميل انتظر قليلا',
+        titleTextStyle: TextStyle(
+          color: Colors.black,
+          fontFamily: 'kufi',
+          fontWeight: FontWeight.bold,
+        )).show();
+    await FirebaseFirestore.instance
+        .collection('AllGroup')
+        .doc(gropid)
+        .collection('staff')
+        .doc(persoid)
+        .collection('points')
+        .doc(docid)
+        .update({
+      "title": newtitle,
+      "phone": newphone,
+    }).then((value) {
+      update();
+
+      Get.back();
+      AwesomeDialog(
+          body: ineed.custmText(
+              data: 'حدث الصفحة لمشاهدة التغيرات', color: Colors.black),
+          dialogType: DialogType.success,
+          context: Get.context!,
+          title: 'تم التعديل',
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontFamily: 'kufi',
+            fontWeight: FontWeight.bold,
+          )).show();
+      getPoints(docid: docid, persoid: personid);
+    });
+  }
 }

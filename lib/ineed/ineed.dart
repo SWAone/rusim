@@ -1,5 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../constns/AppColor.dart';
@@ -157,5 +160,75 @@ class ineed {
             ),
             baseColor: Color.fromARGB(255, 160, 175, 131),
             highlightColor: AppColor.mainColor));
+  }
+
+  static AwesomeDialog lodingDuilog(
+      {String title = '....جار التحميل انتظر قليلا'}) {
+    return AwesomeDialog(
+        dismissOnBackKeyPress: false,
+        dismissOnTouchOutside: false,
+        context: Get.context!,
+        dialogType: DialogType.noHeader,
+        title: title,
+        titleTextStyle: TextStyle(
+          color: Colors.black,
+          fontFamily: 'kufi',
+          fontWeight: FontWeight.bold,
+        ));
+  }
+
+  static AwesomeDialog CustmAwsmDilog(
+      {DialogType dialogType = DialogType.info,
+      String? title = 'title',
+      void Function()? btnOkOnPress,
+      void Function()? btnCancelOnPress,
+      String btnOkText = 'اوكي',
+      String btnCancelText = 'تراجع',
+      String? desc = 'الوصف'}) {
+    return AwesomeDialog(
+        buttonsTextStyle: TextStyle(
+            fontFamily: 'kufi', fontWeight: FontWeight.bold, fontSize: 20.sp),
+        descTextStyle: TextStyle(
+            fontFamily: 'kufi', fontWeight: FontWeight.bold, fontSize: 20.sp),
+        context: Get.context!,
+        dialogType: dialogType,
+        animType: AnimType.rightSlide,
+        title: title,
+        titleTextStyle: TextStyle(
+            fontFamily: 'kufi', fontWeight: FontWeight.bold, fontSize: 20.sp),
+        desc: desc,
+        btnCancelOnPress: btnCancelOnPress,
+        btnOkOnPress: btnOkOnPress,
+        btnOkText: btnOkText,
+        btnCancelText: btnCancelText);
+  }
+
+  static snackBar({String title = 'العنوان', String dec = 'الوصف'}) {
+    return Get.snackbar('', '',
+        barBlur: 20,
+        messageText: Directionality(
+            textDirection: TextDirection.rtl,
+            child: ineed.custmText(data: dec)),
+        titleText: Directionality(
+          textDirection: TextDirection.rtl,
+          child: ineed.custmText(data: title),
+        ),
+        duration: Duration(seconds: 4));
+  }
+
+  static getMessge() {
+    FirebaseMessaging.onMessage.listen((event) {
+      Get.snackbar('', '',
+          backgroundColor: AppColor.mainColor,
+          barBlur: 60,
+          messageText: Directionality(
+              textDirection: TextDirection.rtl,
+              child: ineed.custmText(data: '${event.notification!.body}')),
+          titleText: Directionality(
+            textDirection: TextDirection.rtl,
+            child: ineed.custmText(data: '${event.notification!.title}'),
+          ),
+          duration: Duration(seconds: 5));
+    });
   }
 }

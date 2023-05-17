@@ -6,13 +6,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rusim/constns/AppColor.dart';
 import 'package:rusim/controller/homeC.dart';
-import 'package:rusim/controller/homeController.dart';
 import 'package:rusim/main.dart';
 import 'package:rusim/view/Auth/login.dart';
 import 'package:rusim/view/pointsPage.dart';
 import 'package:rusim/view/serves.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../ineed/ineed.dart';
+import '../table/Meeting.dart';
 import '../table/MeetingDataSource.dart';
 
 class home extends StatelessWidget {
@@ -334,7 +334,6 @@ class home extends StatelessWidget {
                             try {
                               if (details.targetElement ==
                                   CalendarElement.appointment) {
-                                print(details.date);
                                 Get.to(() => pontsPage(
                                     name: cc.person[cc.personIndex]['name'],
                                     docid: cc.items[cc.index]['id'],
@@ -360,6 +359,8 @@ class home extends StatelessWidget {
 
                           view: CalendarView.week,
                           dataSource: MeetingDataSource(cc.meetings),
+                          showDatePickerButton: true,
+                          appointmentBuilder: appointmentBuilder,
                           monthViewSettings: const MonthViewSettings(
                               appointmentDisplayMode:
                                   MonthAppointmentDisplayMode.appointment),
@@ -371,6 +372,29 @@ class home extends StatelessWidget {
               );
             },
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget appointmentBuilder(
+      BuildContext context, CalendarAppointmentDetails details) {
+    final Meeting appointment = details.appointments.first;
+    return Container(
+      width: details.bounds.width,
+      height: details.bounds.height,
+      decoration: BoxDecoration(
+        color: appointment.background,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ineed.custmText(
+                data: appointment.eventName + ' ' + appointment.phone,
+                color: Colors.white),
+          ],
         ),
       ),
     );

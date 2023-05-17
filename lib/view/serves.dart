@@ -4,7 +4,6 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rusim/controller/homeC.dart';
-import 'package:rusim/controller/homeController.dart';
 import 'package:rusim/controller/servesController.dart';
 import 'package:rusim/ineed/ineed.dart';
 import 'package:rusim/table/MeetingDataSource.dart';

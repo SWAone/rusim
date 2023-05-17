@@ -13,7 +13,7 @@ class login extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      backgroundColor: Color.fromARGB(31, 243, 243, 243),
+      backgroundColor: Colors.deepPurple[50],
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Directionality(
@@ -23,59 +23,72 @@ class login extends StatelessWidget {
             builder: (cc) {
               return Form(
                 key: cc.ke,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Center(
-                        child: ineed.custmText(
-                            data: 'تسجيل الدخول',
-                            color: AppColor.mainColor,
-                            fontSize: 20.sp,
-                            isbold: true)),
-                    Divider(),
-                    ineed.custmContainer(
-                      havShdow: false,
-                      colorr: AppColor.mainColor,
-                      w: double.infinity,
-                      child: ineed.custemTextForm(
-                        lable: 'المعرف',
-                        onSaved: (p0) {
-                          cc.email = p0;
-                        },
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 20.h,
                       ),
-                      onTap: () {},
-                    ),
-                    Divider(),
-                    ineed.custmContainer(
-                      havShdow: false,
-                      colorr: AppColor.mainColor,
-                      w: double.infinity,
-                      child: ineed.custemTextForm(
-                        lable: 'كلمة السر',
-                        onSaved: (p0) {
-                          cc.pass = p0;
-                        },
-                      ),
-                      onTap: () {},
-                    ),
-                    Divider(),
-                    ineed.custmContainer(
-                      havShdow: false,
-                      colorr: AppColor.mainColor,
-                      child: Center(
+                      Container(
+                          height: 250.h,
+                          child: Image.asset('assets/images/tato.png')),
+                      Center(
                           child: ineed.custmText(
-                              data: !cc.loding
-                                  ? 'تسجيل الدخول'
-                                  : 'جار التحميل...',
-                              color: Colors.white)),
-                      onTap: () {
-                        cc.sginIn();
-                      },
-                    ),
-                  ],
+                              data: 'تسجيل الدخول',
+                              color: AppColor.mainColor,
+                              fontSize: 20.sp,
+                              isbold: true)),
+                      Divider(),
+                      ineed.custmContainer(
+                        havShdow: false,
+                        colorr: AppColor.mainColor,
+                        w: double.infinity,
+                        child: ineed.custemTextForm(
+                          lable: 'المعرف',
+                          onSaved: (p0) {
+                            cc.email = p0;
+                          },
+                        ),
+                        onTap: () {},
+                      ),
+                      Divider(),
+                      ineed.custmContainer(
+                        havShdow: false,
+                        colorr: AppColor.mainColor,
+                        w: double.infinity,
+                        child: ineed.custemTextForm(
+                          lable: 'كلمة السر',
+                          onSaved: (p0) {
+                            cc.pass = p0;
+                          },
+                        ),
+                        onTap: () {},
+                      ),
+                      Divider(),
+                      ineed.custmContainer(
+                        havShdow: false,
+                        colorr: AppColor.mainColor,
+                        child: Center(
+                            child: ineed.custmText(
+                                data: !cc.loding
+                                    ? 'تسجيل الدخول'
+                                    : 'جار التحميل...',
+                                color: Colors.white)),
+                        onTap: () {
+                          cc.sginIn();
+                        },
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                      ),
+                      ineed.custmText(
+                          data: 'روسم تاتو',
+                          color: AppColor.mainColor,
+                          fontSize: 15.sp,
+                          isbold: true)
+                    ],
+                  ),
                 ),
               );
             },
