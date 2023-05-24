@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rusim/controller/homeC.dart';
 import 'package:rusim/controller/servesController.dart';
 import 'package:rusim/ineed/ineed.dart';
-import 'package:rusim/table/MeetingDataSource.dart';
-import 'package:rusim/view/Auth/Controller/AuthController.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../constns/AppColor.dart';
-import '../table/Meeting.dart';
 
 class serves extends StatelessWidget {
   String StaffName;

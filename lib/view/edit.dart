@@ -32,7 +32,7 @@ class edit extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Container(
             child: Directionality(
-              textDirection: TextDirection.ltr,
+              textDirection: TextDirection.rtl,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -53,10 +53,17 @@ class edit extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          // ineed.custemTextForm(
+                          //   controllerr:textControllerTitle ,
+                          //   color: Colors.black,
+                          //   isrequired: false,
+                          //   lable: "$title",
+                          //   onSaved: (p0) {},
+                          // ),
                           TextFormField(
                             onChanged: (value) {
                               title = value;
-                              textControllerTitle.text = value;
+                              //  textControllerTitle.text = value;
                             },
                             style: TextStyle(
                                 color: Colors.black,
@@ -65,6 +72,10 @@ class edit extends StatelessWidget {
                             onTap: () {
                               textControllerTitle.text = title;
                             },
+                            textAlign: TextAlign.right,
+                            textDirection: TextDirection
+                                .rtl, // تحديد اتجاه النص من اليمين إلى اليسار
+
                             controller: textControllerTitle,
                             decoration: InputDecoration(
                               hintText: title,
@@ -73,7 +84,7 @@ class edit extends StatelessWidget {
                           TextFormField(
                             onChanged: (value) {
                               phone = value;
-                              textControllerPhone.text = value;
+                              // textControllerPhone.text = value;
                             },
                             style: TextStyle(
                                 color: Colors.black,
@@ -87,7 +98,7 @@ class edit extends StatelessWidget {
                               hintText: phone,
                             ),
                           ),
-                          //
+
                           SizedBox(
                             height: 20.h,
                           ),

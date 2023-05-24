@@ -107,9 +107,12 @@ class ineed {
 
   static Widget custemTextForm(
       {required String lable,
+      Color color = Colors.white,
+      TextEditingController? controllerr,
       required void Function(String?)? onSaved,
       bool isrequired = true}) {
     return TextFormField(
+      controller: controllerr,
       onSaved: onSaved,
       validator: isrequired
           ? (value) {
@@ -119,13 +122,13 @@ class ineed {
             }
           : null,
       style: TextStyle(
-          color: Colors.white, fontWeight: FontWeight.bold, fontFamily: 'kufi'),
+          color: color, fontWeight: FontWeight.bold, fontFamily: 'kufi'),
       decoration: InputDecoration(
         label: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5),
           child: Row(
             children: [
-              ineed.custmText(data: lable, fontSize: 15.sp),
+              ineed.custmText(data: lable, fontSize: 15.sp, color: color),
               SizedBox(
                 width: 5.w,
               ),
