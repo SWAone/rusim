@@ -97,8 +97,8 @@ class pointsPageController extends GetxController {
       required String persoid,
       required String docid}) async {
     homc.sendNotification(
-        " قام  ${homc.name} يتعديل  حجز ${homc.person[homc.personIndex]['name']}",
         "تعديل حجز",
+        " قام  ${homc.name} بتعديل  حجز من حجوزات  ${homc.person[homc.personIndex]['name']}",
         " ");
     AwesomeDialog(
         dialogType: DialogType.noHeader,
