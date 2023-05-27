@@ -331,29 +331,36 @@ class home extends StatelessWidget {
                           },
                           //في حال تم الضغط على مكان محجوز بوقت
                           onTap: (CalendarTapDetails details) {
-                            try {
-                              if (details.targetElement ==
-                                  CalendarElement.appointment) {
-                                Get.to(() => pontsPage(
-                                    name: cc.person[cc.personIndex]['name'],
-                                    docid: cc.items[cc.index]['id'],
-                                    personId: cc.person[cc.personIndex]['id']));
-                                print('محجوز');
-                              } else {
-                                if (cc.person.length > 0) {
-                                  Get.to(() => serves(
-                                        StaffName: cc.person[cc.personIndex]
-                                            ['name'],
-                                        docid: cc.items[cc.index]['id'],
-                                        personId: cc.person[cc.personIndex]
-                                            ['id'],
-                                        timeSeceted: timeSeceted,
-                                      ));
+                            if (cc.rank != -1) {
+                              try {
+                                if (details.targetElement ==
+                                    CalendarElement.appointment) {
+                                  Get.to(() => pontsPage(
+                                      name: cc.person[cc.personIndex]['name'],
+                                      docid: cc.items[cc.index]['id'],
+                                      personId: cc.person[cc.personIndex]
+                                          ['id']));
+                                  print('محجوز');
                                 } else {
-                                  Get.snackbar('انتبه', 'اختر عضو');
+                                  if (cc.rank != -1) {
+                                    if (cc.person.length > 0) {
+                                      Get.to(() => serves(
+                                            StaffName: cc.person[cc.personIndex]
+                                                ['name'],
+                                            docid: cc.items[cc.index]['id'],
+                                            personId: cc.person[cc.personIndex]
+                                                ['id'],
+                                            timeSeceted: timeSeceted,
+                                          ));
+                                    } else {
+                                      Get.snackbar('انتبه', 'اختر عضو');
+                                    }
+                                  }
                                 }
+                              } catch (e) {
+                                print('erorrrrr');
                               }
-                            } catch (e) {}
+                            }
                           },
                           // allowAppointmentResize: true,
 

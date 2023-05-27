@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
           RollingBottomBarItem(Icons.home,
               label: 'الرئيسة', activeColor: Colors.white),
           RollingBottomBarItem(Icons.group,
-              label: 'المجايع', activeColor: Colors.white),
+              label: 'المجاميع', activeColor: Colors.white),
           RollingBottomBarItem(Icons.shape_line_outlined,
               label: 'الخدمات', activeColor: Colors.white),
         ],

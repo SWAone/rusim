@@ -3,12 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rusim/constns/AppColor.dart';
 import 'package:rusim/ineed/ineed.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rusim/view/Auth/Controller/AuthController.dart';
-import 'package:rusim/view/newAcount.dart';
 
-class login extends StatelessWidget {
-  const login({super.key});
+class newAcuont extends StatelessWidget {
+  const newAcuont({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +21,7 @@ class login extends StatelessWidget {
             init: AuthController(),
             builder: (cc) {
               return Form(
-                key: cc.ke,
+                key: cc.ke2,
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -36,7 +34,7 @@ class login extends StatelessWidget {
                           child: Image.asset('assets/images/icon.jpg')),
                       Center(
                           child: ineed.custmText(
-                              data: 'تسجيل الدخول',
+                              data: 'انشاء حساب',
                               color: AppColor.mainColor,
                               fontSize: 20.sp,
                               isbold: true)),
@@ -46,9 +44,22 @@ class login extends StatelessWidget {
                         colorr: AppColor.mainColor,
                         w: double.infinity,
                         child: ineed.custemTextForm(
-                          lable: 'المعرف',
+                          lable: 'الاسم',
                           onSaved: (p0) {
                             cc.email = p0;
+                          },
+                        ),
+                        onTap: () {},
+                      ),
+                      Divider(),
+                      ineed.custmContainer(
+                        havShdow: false,
+                        colorr: AppColor.mainColor,
+                        w: double.infinity,
+                        child: ineed.custemTextForm(
+                          lable: ' المعرف',
+                          onSaved: (p0) {
+                            cc.gamil = p0;
                           },
                         ),
                         onTap: () {},
@@ -72,27 +83,16 @@ class login extends StatelessWidget {
                         colorr: AppColor.mainColor,
                         child: Center(
                             child: ineed.custmText(
-                                data: !cc.loding
-                                    ? 'تسجيل الدخول'
-                                    : 'جار التحميل...',
+                                data: !cc.loding ? 'انشاء' : 'جار التحميل...',
                                 color: Colors.white)),
                         onTap: () {
-                          cc.sginIn();
+                          print('sssssssssu');
+                          cc.CreateAcount();
                         },
                       ),
                       SizedBox(
                         height: 50.h,
                       ),
-                      InkWell(
-                        onTap: () {
-                          Get.to(newAcuont());
-                        },
-                        child: ineed.custmText(
-                            data: 'انشاء حساب',
-                            color: AppColor.mainColor,
-                            fontSize: 15.sp,
-                            isbold: true),
-                      )
                     ],
                   ),
                 ),

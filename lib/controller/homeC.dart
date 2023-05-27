@@ -41,6 +41,8 @@ class homeC extends GetxController {
         .then((value) {
       name = value.data()!['name'];
       rank = value.data()!['rank'];
+    }).then((value) {
+      print('============================ $rank');
     });
   }
 

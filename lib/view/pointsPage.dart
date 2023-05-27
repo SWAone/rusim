@@ -16,6 +16,7 @@ class pontsPage extends StatelessWidget {
   String docid, personId, name;
   TextEditingController textControllerTitle = TextEditingController();
   TextEditingController textControllerPhone = TextEditingController();
+  homeC homc = Get.put(homeC());
 
   pontsPage(
       {super.key,
