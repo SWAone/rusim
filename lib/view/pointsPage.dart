@@ -1,16 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:rusim/constns/AppColor.dart';
 import 'package:rusim/controller/PointsPageController.dart';
 import 'package:rusim/controller/homeC.dart';
 import 'package:rusim/view/edit.dart';
-import 'package:rusim/view/serves.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
+
 import '../ineed/ineed.dart';
-import '../table/MeetingDataSource.dart';
 
 class pontsPage extends StatelessWidget {
   String docid, personId, name;

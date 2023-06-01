@@ -1,7 +1,4 @@
-import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:rusim/constns/AppColor.dart';
 import 'package:rusim/controller/servesController.dart';
@@ -51,16 +48,39 @@ class timee extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Center(
-                        child: DurationPicker(
-                          duration: sc.timepic,
-                          onChange: (val) {
-                            sc.time = val.inMinutes;
-                            print(val.inMinutes);
-                            sc.UpdateTimePic(val);
-                          },
-                          snapToMins: 5.0,
+                      // Center(
+                      //   child: DurationPicker(
+                      //     duration: sc.timepic,
+                      //     onChange: (val) {
+                      //       sc.time = val.inMinutes;
+                      //       print(val.inMinutes);
+                      //       sc.UpdateTimePic(val);
+                      //     },
+                      //     snapToMins: 5.0,
+                      //   ),
+                      // ),
+                      Divider(
+                        color: Colors.white,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: ineed.custemTextForm(
+                            isnumbe: true,
+                            color: Colors.black,
+                            lable: 'عدد الدقائق',
+                            onSaved: (p0) {
+                              sc.time = int.parse('$p0');
+                              ;
+                            },
+                          ),
                         ),
+                      ),
+                      Divider(
+                        color: Colors.white,
                       ),
                       Center(
                         child: Container(
@@ -71,8 +91,12 @@ class timee extends StatelessWidget {
                               onPressed: () {
                                 sc.addServes();
                               },
-                              child:
-                                  ineed.custmText(data: 'اضافة', isbold: true)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: ineed.custmText(
+                                    data: 'اضافة', isbold: true),
+                              )),
                         ),
                       )
                     ],

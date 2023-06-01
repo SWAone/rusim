@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rusim/constns/AppColor.dart';
 import 'package:rusim/ineed/ineed.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rusim/view/Auth/Controller/AuthController.dart';
 import 'package:rusim/view/newAcount.dart';
 

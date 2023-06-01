@@ -1,16 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:rusim/controller/homeC.dart';
-import 'package:rusim/ineed/ineed.dart';
-
-import '../constns/AppColor.dart';
-import '../table/Meeting.dart';
-import '../table/MeetingDataSource.dart';
 
 class servesController extends GetxController {
   List<Map> servesList = [];

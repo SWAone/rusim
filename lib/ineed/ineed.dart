@@ -107,11 +107,13 @@ class ineed {
 
   static Widget custemTextForm(
       {required String lable,
+      bool isnumbe = false,
       Color color = Colors.white,
       TextEditingController? controllerr,
       required void Function(String?)? onSaved,
       bool isrequired = true}) {
     return TextFormField(
+      keyboardType: isnumbe ? TextInputType.number : TextInputType.text,
       controller: controllerr,
       onSaved: onSaved,
       validator: isrequired
