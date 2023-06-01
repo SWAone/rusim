@@ -16,7 +16,7 @@ class servesController extends GetxController {
   List<Map> servesList = [];
   bool getServesLoding = true;
   homeC homc = Get.put(homeC());
-
+  Duration timepic = new Duration(minutes: 10);
   GlobalKey<FormState> formk = new GlobalKey<FormState>();
   GlobalKey<FormState> formk2 = new GlobalKey<FormState>();
 
@@ -43,6 +43,11 @@ class servesController extends GetxController {
     });
   }
 
+  UpdateTimePic(Duration p) {
+    timepic = p;
+    update();
+  }
+
   addServes() async {
     var sta = formk.currentState;
     if (sta!.validate()) {
@@ -62,6 +67,9 @@ class servesController extends GetxController {
         "title": title,
         "time": time == null ? 30 : time,
       }).then((value) {
+        print('=============');
+        print(time);
+        print(title);
         onInit();
         update();
 
