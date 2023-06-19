@@ -77,6 +77,8 @@ class servesController extends GetxController {
       required String groupId,
       required String servesName,
       required String staffName,
+      String uid = 'a',
+      bool isNotuser = false,
       PresonId}) async {
     var sta = formk2.currentState;
     if (sta!.validate()) {
@@ -85,29 +87,42 @@ class servesController extends GetxController {
       DateTime startTime = DateTime(timeSeceted.year, timeSeceted.month,
           timeSeceted.day, timeSeceted.hour);
       DateTime endTime = startTime.add(Duration(minutes: endTimee));
-      homc
-          .sendNotification(
-              " قام ${homc.name} باضافة حجز جديد $servesName لقائمة  $staffName",
-              "من الساعة ${timeSeceted.hour} : ${timeSeceted.minute} لتاريخ ${timeSeceted.year}/${timeSeceted.month}/${timeSeceted.day} مدة الحجز ${timeSeceted.minute + endTimee} دقيقة",
-              " ")
-          .then((value) {});
-      await FirebaseFirestore.instance
-          .collection('AllGroup')
-          .doc(groupId)
-          .collection('staff')
-          .doc(PresonId)
-          .collection('points')
-          .add({
-        "title": title,
-        "startTime": startTime,
-        "endTime": endTime,
-        "phone": phone
-      }).then((value) {
-        print(phone);
-        update();
-      });
+      isNotuser == false
+          ? homc
+              .sendNotification(
+                  " قام ${homc.name} باضافة حجز جديد $servesName لقائمة  $staffName",
+                  "من الساعة ${timeSeceted.hour} : ${timeSeceted.minute} لتاريخ ${timeSeceted.year}/${timeSeceted.month}/${timeSeceted.day} مدة الحجز ${timeSeceted.minute + endTimee} دقيقة",
+                  " ")
+              .then((value) {})
+          : null;
+      isNotuser == false
+          ? await FirebaseFirestore.instance
+              .collection('AllGroup')
+              .doc(groupId)
+              .collection('staff')
+              .doc(PresonId)
+              .collection('points')
+              .add({
+              "title": title,
+              "startTime": startTime,
+              "endTime": endTime,
+              "phone": phone
+            }).then((value) {
+              print(phone);
+              update();
+            })
+          : await FirebaseFirestore.instance.collection(uid).add({
+              "title": title,
+              "startTime": startTime,
+              "endTime": endTime,
+              "phone": phone
+            }).then((value) {
+              print(phone);
+              update();
+            });
 
       Get.back();
+      print('===================== uid  $uid');
     }
   }
 

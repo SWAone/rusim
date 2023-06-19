@@ -30,10 +30,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:rolling_bottom_bar/rolling_bottom_bar.dart';
 import 'package:rolling_bottom_bar/rolling_bottom_bar_item.dart';
 import 'package:rusim/constns/AppColor.dart';
+import 'package:rusim/controller/homeC.dart';
 import 'package:rusim/view/Auth/login.dart';
 import 'package:rusim/view/home.dart';
 import 'package:rusim/view/mainServes.dart';
@@ -45,6 +47,8 @@ void main() async {
   runApp(MyApp());
 }
 
+homeC cc = Get.put(homeC());
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           home: FirebaseAuth.instance.currentUser == null
               ? login()
-              : MyHomePage(),
+              : cc.rank == -1
+                  ? home()
+                  : MyHomePage(),
         );
       },
     );
@@ -95,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
         useActiveColorByDefault: false,
         items: const [
           RollingBottomBarItem(Icons.home,
-              label: 'الرئيسة', activeColor: Colors.white),
+              label: 'الرئيسية', activeColor: Colors.white),
           RollingBottomBarItem(Icons.group,
               label: 'المجاميع', activeColor: Colors.white),
           RollingBottomBarItem(Icons.shape_line_outlined,

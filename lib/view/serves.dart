@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:rusim/controller/homeC.dart';
 import 'package:rusim/controller/servesController.dart';
 import 'package:rusim/ineed/ineed.dart';
@@ -20,6 +21,7 @@ class serves extends StatelessWidget {
       required this.StaffName,
       required this.timeSeceted,
       required this.docid,
+      bool isNotUser = false,
       required this.personId});
   homeC homController = Get.put(homeC());
   @override

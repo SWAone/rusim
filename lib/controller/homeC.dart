@@ -14,7 +14,7 @@ class homeC extends GetxController {
   List<Meeting> meetings = <Meeting>[];
   bool loding = true;
   int index = 0;
-  int? rank;
+  int rank = -1;
   int personIndex = 0;
   List<Map> items = [];
   List<Map> person = [];
@@ -88,7 +88,11 @@ class homeC extends GetxController {
     });
   }
 
-  void gertPersonPoits({required String personDocid, groupId}) async {
+  void gertPersonPoits(
+      {required String personDocid,
+      groupId,
+      bool isNotUaer = false,
+      required}) async {
     meetings.clear();
     await FirebaseFirestore.instance
         .collection('AllGroup')
